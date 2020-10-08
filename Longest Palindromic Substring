@@ -1,0 +1,46 @@
+class Solution {
+    public String longestPalindrome(String s) {
+        // check special case
+        if (s == null || s.length() == 0) {
+            return "";
+        }
+        String result = "";
+        for (int i = 0; i < s.length(); i++) {
+            String s1 = findPalindrom(s, i, i);
+            String s2 = findPalindrom(s, i, i+1);
+            
+            // System.out.println(s1 + ":" +s2);
+            
+            if (s1.length() > result.length()) {
+                result = s1;
+            }
+            if (s2.length() > result.length()) {
+                result = s2;
+            }
+        }
+        return result;
+    }
+    
+    public String findPalindrom(String s, int left, int right) {
+        int L = left;
+        int R = right;
+        while (L >= 0 && R <= s.length() - 1 && s.charAt(L) == s.charAt(R)) {
+            L--;
+            R++;
+        }
+        return s.substring(L+1, R);
+    }
+}
+
+/*
+** question: https://leetcode.com/problems/longest-palindromic-substring/
+** output: how many strings I need to return? a single one, are there multiple solutions
+** like single character, which one should i return.
+**
+** different solution, O(T)? 2n - 1 scenarios O(n^2)
+** pay attention to the result substring(L+1, R)
+
+** java syntax: 
+** Sytem.out.print(s1 + " " + s2);
+** String s, (String first letter upper case)
+*/
