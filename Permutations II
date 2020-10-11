@@ -1,0 +1,42 @@
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if (nums == null || nums.length == 0) {
+            return res;
+        }
+        Arrays.sort(nums);
+        int[] flags = new int[nums.length];
+        getAllPermutations(res, nums, flags, new ArrayList<Integer>());
+        return res;
+        
+    }
+    
+    public void getAllPermutations(List<List<Integer>> res, int[] nums, int[] flags, List<Integer> curPermutation) {
+        if (curPermutation.size() == nums.length) {
+            res.add(new ArrayList(curPermutation));
+            return;
+        }
+        
+        for (int i = 0; i < nums.length; i++) {
+            if (flags[i] == 0) {
+                if (i > 0 && nums[i] == nums[i-1] && flags[i-1] == 0) {
+                    continue;
+                }
+                flags[i] = 1;
+                curPermutation.add(nums[i]);
+                getAllPermutations(res, nums, flags, curPermutation);
+                curPermutation.remove(curPermutation.size() - 1);
+                flags[i] = 0;
+            }
+        }
+    }
+}
+
+/* 
+** input dup numbers:
+** don't forget to sort, so you can remove dup result
+
+** java:
+** Arrays.sort()
+** 
+*/
