@@ -1,0 +1,42 @@
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if (nums == null || nums.length == 0) {
+            return res;
+        }
+
+        int[] flags = new int[nums.length];
+        
+        getAllPermutations(res, flags, new ArrayList<Integer>(), nums);
+        return res;
+    }
+    
+    public void getAllPermutations(List<List<Integer>> res, int[] flags, List<Integer> curPermutation, int[] nums) {
+        if (curPermutation.size() == nums.length) {
+            res.add(new ArrayList(curPermutation));
+            return;
+        }
+        
+        for (int i = 0; i < nums.length; i++) {
+            if (flags[i] == 0) {
+                flags[i] = 1;
+                curPermutation.add(nums[i]);
+                getAllPermutations(res, flags, curPermutation, nums);
+                flags[i] = 0;
+                // curPermutation.remove( new Integer(nums[i]));
+                curPermutation.remove(curPermutation.size() - 1);
+            }
+        }
+    }
+}
+
+/*
+** input, unique number or dup number?
+** output , order? unique
+
+** JAVA
+** List<Integer> = new ArrayList<Integer>();
+** list length: => list.size()
+** add(), remove(Object) or remove(index)
+*/
