@@ -1,0 +1,35 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        // special case
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        
+        int res = nums[0];
+        int preSum = 0;
+        int preNum = 0;
+        
+        // preSum + num
+        // num
+        
+        for (int i = 0; i < nums.length; i++) {
+            int curSum = nums[i] + Math.max(preSum, preNum);
+                        
+            res = Math.max(res, Math.max(nums[i], curSum));
+            preSum = curSum;
+            preNum = nums[i];
+            //System.out.println("curSum: " + preSum + " current num: " + preNum + " max value: " + res);
+        }
+        
+        return res;
+    }
+}
+
+/*
+** questions
+** input: array, contain values, >0 == 0 and <= 0
+** output: int
+
+** for each position, max = currentValue or current + previous sum, or 
+** include current number, or not. 
+*/
