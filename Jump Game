@@ -1,0 +1,16 @@
+class Solution {
+    public boolean canJump(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return false;
+        }
+
+        int rightMost = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (i > rightMost) return false;
+            int sum = i + nums[i];
+            rightMost = Math.max(rightMost, sum);
+        }
+        return rightMost >= nums.length - 1;
+    }
+}
