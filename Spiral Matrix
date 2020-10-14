@@ -1,0 +1,56 @@
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> res = new ArrayList<Integer>();
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return res;
+        }
+
+        int rowStart = 0;
+        int rowEnd = matrix.length - 1;
+        int colStart = 0;
+        int colEnd = matrix[0].length - 1;
+
+        int i = 0;
+        int totalNum = matrix.length * matrix[0].length;
+        while (i < totalNum) {
+            for (int c=colStart; c <= colEnd && i < totalNum; c++) {
+                res.add(matrix[rowStart][c]);
+                i++;
+            }
+            rowStart++;
+
+            for (int r=rowStart; r <= rowEnd && i < totalNum; r++) {
+                res.add(matrix[r][colEnd]);
+                i++;
+            }
+            colEnd--;
+
+            for (int c=colEnd; c >= colStart && i < totalNum; c--) {
+                res.add(matrix[rowEnd][c]);
+                i++;
+            }
+            rowEnd--;
+
+            for (int r=rowEnd; r >= rowStart && i < totalNum; r--) {
+                res.add(matrix[r][colStart]);
+                i++;
+            }
+            colStart++;
+        }
+        return res;
+    }
+}
+
+/*
+** left down right up.
+** col in colStart colEnd
+** rowStart++;
+** row in rowstart, rowEnd
+** colEnd--;
+** col in colEnd, colStart
+** rowEnd--;
+** row in rowEnd, rowStart
+** colStart++;
+
+** summary: when increase i inside loop, remember to check the index in case it gets too big
+*/
