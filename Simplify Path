@@ -1,0 +1,38 @@
+class Solution {
+    public String simplifyPath(String path) {
+        // special cases
+        if (path == null || path.length() == 0) {
+            return path;
+        }
+
+        Stack<String> stack = new Stack<>();
+        Set<String> skip = new HashSet<>(Arrays.asList("..", ".", ""));
+        
+        for (String dir : path.split("/")) {
+            if (dir.equals("..") && !stack.isEmpty()) stack.pop();
+            else if(!skip.contains(dir)) stack.push(dir);
+        }
+        
+        String res = "";
+        while (stack.size() > 0) {
+            res = "/" + stack.pop() + res;
+        }
+        return res.isEmpty() ? "/" : res;
+    }
+}
+
+/*
+** questions: empty result -> "/"
+** deque: support element insertin and removal at both ends.
+** string equal: str.equals("..")
+** HashSet<>(Arrays.asList("..", ".", ""));
+*/
+
+/*
+** . means current directory
+** .. moves the directory up a level
+** /// multi slashes become one
+** the last directory name must not end with a trailing /
+
+** use stack,
+*/
