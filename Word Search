@@ -1,0 +1,59 @@
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        
+        int[][] flags = new int[board.length][board[0].length];
+        
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == word.charAt(0)) {
+                    if (findWord(board, flags, word, 0, i, j) == true) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean findWord(char[][] board, int[][] flags, String word, int curIndex, int r, int c) {
+        int[] delta_x = {-1, 0, 0, 1};
+        int[] delta_y = {0, -1, 1, 0};
+        
+        if (curIndex == word.length() - 1) {
+            return true;
+        }
+        
+        flags[r][c] = 1;
+        curIndex += 1;
+        for (int i = 0; i < 4; i++) {
+            int new_r = r + delta_x[i];
+            int new_c = c + delta_y[i];
+            if (!valid(new_r, new_c, board)) {continue;}
+            if (board[new_r][new_c] == word.charAt(curIndex) && flags[new_r][new_c] == 0 && findWord(board, flags, word, curIndex, new_r, new_c)) {
+               return true;
+            }
+        }
+        curIndex -= 1;
+        flags[r][c] = 0;
+        return false;
+    }
+    
+    public boolean valid(int r, int c, char[][] board) {
+        if (r >= 0 && r < board.length && c >= 0 && c < board[0].length) {
+            return true;
+        }
+        return false;
+    }
+}
+
+/*
+** return boolean
+** each character can only be used once
+** adjacent -> left, right, top, bottom
+** don't forget to check index, and flags == 0 or 1. only use once.
+
+** java
+** character equal can use ==
+** dfs, need to use current true &&  dfs(n-1) == true , return true
+** 
+*/
