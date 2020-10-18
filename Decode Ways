@@ -1,0 +1,23 @@
+class Solution {
+    public int numDecodings(String s) {
+        if (s.length() == 0) {
+            return 0;
+        }
+        int prevWays = 1;
+        int currWays = s.charAt(0) == '0' ? 0 : 1;
+        for (int i = 1; i < s.length(); i++) {
+            int numWays = 0;
+            char curr = s.charAt(i);
+            String temp = s.substring(i-1, i+1);
+            if (curr != '0') {
+                numWays += currWays;
+            }
+            if (temp.charAt(0) != '0' && Integer.parseInt(temp) <= 26) {
+                numWays += prevWays;
+            }
+            prevWays = currWays;
+            currWays = numWays;
+        }
+        return currWays;
+    }
+}
